@@ -1,0 +1,57 @@
+Reference Files:
+
+GRCh38.p13
+GCF_000001405.39.gz (NIH dbSNP build 155 in compressed VCF format)
+- https://ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.39.gz
+
+GCF_000001405.39_GRCh38.p13_assembly_report.txt (needed to convert NIH to other conventions)
+- https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_assembly_report.txt
+
+reference fasta
+GRCh38.p13.genome.fa.gz (version used)*
+- wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_38/GRCh38.p13.genome.fa.gz -O - | gunzip -c | bgzip > GRCh38.p13.genome.fa.gz
+
+GCF_000001405.39_GRCh38.p13_genomic.fna.gz (version to use in next iteration)**
+- https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Homo_sapiens/annotation_releases/current/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_genomic.fna.gz
+
+Tools Used:
+
+bwa-mem2 (https://github.com/bwa-mem2)
+- bwa-mem2-2.0pre2 (version used)
+- bwa-mem2-2.2.1 (current version)***
+
+bcftools
+- apt-get install bcftools
+- bcftools/focal,now 1.10.2-2 amd64
+
+GATK
+- gatk-4.2.3.0
+- https://github.com/broadinstitute/gatk/releases/download/4.2.3.0/gatk-4.2.3.0.zip
+
+IGV
+- IGV 2.11-4
+- http://software.broadinstitute.org/software/igv/download
+
+minimap2
+- apt-get install minimap2
+- minimap2/focal,now 2.17+dfsg-2 amd64
+
+samtools
+- apt-get install samtools
+- samtools/focal,now 1.10-3 amd64
+
+tabix
+- apt-get install tabix
+- tabix/focal,now 1.10.2-3 amd64
+
+WGSExtract (https://github.com/WGSExtract)
+- WGSExtract Beta v3 10Jul2021
+- https://bit.ly/3hvFsyA (download link)
+
+Footnotes:
+
+*	using this version requires extra steps to match the alignment conventions and the dbSNP conventions
+
+**	using this version should remove a few steps, saving time and reducing the opportunities to introduce errors into the process
+
+***	using this version should improve the alignment speed because of the cpu processing optimizations

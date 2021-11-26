@@ -1,0 +1,23 @@
+# Pipeline Runtime
+First timed runthru
+
+Step 1: fastq alignment using minimap2
+- minimap2 -t8 -a <filepath>/GRCh38.p13.genome.fa.gz <filepath>/<filename>1.fastq.gz <filepath>/<filename>2.fastq.gz -R @RG\tID:foo\tSM:bar
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 3:52:59
+
+Step 2: build bam index
+- gatk BuildBamIndex -I <filepath>/<filename>.bam
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 1:15:19
+
+Step 3: use haplotype caller to build intermediate gvcf
+- gatk --java-options -Xmx12g HaplotypeCaller --native-pair-hmm-threads 8 -R <filepath>/GRCh38.p13.genome.fa.gz -I <filepath>/<filename>.bam -D <filepath>/dbsnp_146.hg38.vcf.gz -O <filepath>/<filename>.g.vcf.gz -ERC GVCF --output-mode EMIT_ALL_ACTIVE_SITES"
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 46:56:34
+
+Step 4: use genotype to build final gvcf
+- /gatk --java-options "-Xmx16g" GenotypeGVCFs -R <filepath>/GRCh38.p13.genome.fa.gz -D <filepath>/dbsnp_146.hg38.vcf.gz -V <filepath>/<filename>.g.vcf.gz -O <filepath>/<filename>.genotype.vcf.gz -all-sites
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 34:14:29
+
+Notes on this run:
+- minimap2: I noticed a substantial drop in read coverage from other bam alignments produced by the same source fastq files, so despite the faster processing time, I changed aligners after this run.
+- dbSNP build 146: while waiting for this run, I found build 155 existed, but it needed some pre-processing to add to the pipeline, subsequent runs use the newer build
+

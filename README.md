@@ -6,8 +6,8 @@ This repo is a place to keep some notes related to my personal efforts in gettin
 
 At present, these pertain specifically to the following:
 - input raw files from test provider (Dante Labs for my current samples)
-- use the latest reference files (currently hg38 patch 13 from 2021)
-- use the latest dbSNP (build 155)
+- use the latest reference files
+- use the latest dbSNP build
 
 The major steps of this pipeline from fastq to gvcf ready for analysis:
 - prep reference fasta (generate indexes etc.)
@@ -16,10 +16,17 @@ The major steps of this pipeline from fastq to gvcf ready for analysis:
 - haplotyping of bam to produce intermediate vcf
 - genotyping of intermediate vcf to produce final vcf (ready for analysis)
 
-My inspiration for attempting this myself was this blog:
+My inspiration for finally attempting this myself was this blog post:
 https://strahbg.com/?p=3356.  While I am very grateful for the starting point this gave, I found some of the steps needed revisions. A few changes I wanted or needed to make were:
 - use newer reference files (both fasta and dbSNP)
 - add how to convert latest dnSNP from source to match aligner
 - change the aligner to reduce errors in my files (i.e. a drop in read coverage)
 - adjust some performance variables (memory and/or threads)
 - add/revise duration estimates for the various steps
+
+Additional helpful URLs (aside from the manpages and reference documents for the tools used) included:
+https://biology.stackexchange.com/questions/59493/how-to-convert-bwa-mem-output-to-bam-format-without-saving-sam-file
+https://github.com/bwa-mem2/bwa-mem2
+https://www.beholdgenealogy.com/blog/?p=3209
+https://www.htslib.org/workflow/#mapping_to_variant
+https://www.snpedia.com/index.php/VCF
