@@ -1,11 +1,34 @@
 Reference Files:
 
-GRCh38.p13
-GCF_000001405.39.gz (NIH dbSNP build 155 in compressed VCF format)
+dbSNP
+
+dbSNP build 146 for hg38 (old version, source broad institute)
+
+dbsnp_146.hg38.vcf.gz
+- wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.hg38.vcf.gz
+
+dbsnp_146.hg38.vcf.gz.tbi
+- wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.hg38.vcf.gz.tbi
+
+
+dbSNP build 155 for hg38, specifically for GRCh38.p13 (current version, source NIH)
+
+GCF_000001405.39.gz
 - https://ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.39.gz
 
 GCF_000001405.39_GRCh38.p13_assembly_report.txt (needed to convert NIH to other conventions)
 - https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_assembly_report.txt
+
+GRCh38.dbSNP155.sorted.hybrid.vcf.gz
+- derived from GCF_000001405.39.gz
+-- uses GCF_000001405.39_GRCh38.p13_assembly_report.txt to convert CHROM values to match those of reference fasta GRCh38.p13.genome.fa.gz then re-sorted
+
+GRCh38.dbSNP155.sorted.hybrid.vcf.gz.tbi
+- tabix index of GRCh38.dbSNP155.sorted.hybrid.vcf.gz
+
+GRCh38.dbSNP155.sorted.hybrid.vcf.gz.idx
+- igvtools index of GRCh38.dbSNP155.sorted.hybrid.vcf.gz
+
 
 reference fasta
 GRCh38.p13.genome.fa.gz (version used)*
@@ -13,6 +36,7 @@ GRCh38.p13.genome.fa.gz (version used)*
 
 GCF_000001405.39_GRCh38.p13_genomic.fna.gz (version to use in next iteration)**
 - https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Homo_sapiens/annotation_releases/current/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_genomic.fna.gz
+
 
 Tools Used:
 
