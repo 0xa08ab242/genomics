@@ -2,6 +2,14 @@
 
 First timed runthru
 
+Step 0a:
+- samtools faidx <filepath>/GRCh38.p13.genome.fa.gz
+- not timed
+
+Step 0b:
+- gatk CreateSequenceDictionary -R <filepath>/GRCh38.p13.genome.fa.gz -O <filepath>/GRCh38.p13.genome.dict
+- not timed
+
 Step 1: fastq alignment using minimap2
 - minimap2 -t8 -a <filepath>/GRCh38.p13.genome.fa.gz <filepath>/<filename>1.fastq.gz <filepath>/<filename>2.fastq.gz -R @RG\tID:foo\tSM:bar
 - Elapsed (wall clock) time (h:mm:ss or m:ss): 3:52:59

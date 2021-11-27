@@ -2,37 +2,57 @@ Reference Files:
 
 dbSNP
 
-dbSNP build 146 for hg38 (old version, source broad institute)
+build 146 for hg38 (old version, source broad institute)
 
 dbsnp_146.hg38.vcf.gz
 - wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.hg38.vcf.gz
+- file size 3,411,143,311 bytes
 
 dbsnp_146.hg38.vcf.gz.tbi
 - wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.hg38.vcf.gz.tbi
+- file size 2,466,606 bytes
 
-
-dbSNP build 155 for hg38, specifically for GRCh38.p13 (current version, source NIH)
+build 155 for hg38, specifically for GRCh38.p13 (current version, source NIH)
 
 GCF_000001405.39.gz
 - https://ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.39.gz
+- file size 25,648,980,738 bytes
+
+GCF_000001405.39.gz.tbi
+- tabix index of GCF_000001405.39.gz
+- file size 3,093,896 bytes
 
 GCF_000001405.39_GRCh38.p13_assembly_report.txt (needed to convert NIH to other conventions)
 - https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_assembly_report.txt
+- 72,597 bytes
 
 GRCh38.dbSNP155.sorted.hybrid.vcf.gz
 - derived from GCF_000001405.39.gz
 -- uses GCF_000001405.39_GRCh38.p13_assembly_report.txt to convert CHROM values to match those of reference fasta GRCh38.p13.genome.fa.gz then re-sorted
+- file size 26,463,545,470 bytes
 
 GRCh38.dbSNP155.sorted.hybrid.vcf.gz.tbi
 - tabix index of GRCh38.dbSNP155.sorted.hybrid.vcf.gz
+- file size 3,074,198 bytes
 
 GRCh38.dbSNP155.sorted.hybrid.vcf.gz.idx
 - igvtools index of GRCh38.dbSNP155.sorted.hybrid.vcf.gz
+- file size 1,662,318 bytes
 
 
 reference fasta
+
 GRCh38.p13.genome.fa.gz (version used)*
 - wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_38/GRCh38.p13.genome.fa.gz -O - | gunzip -c | bgzip > GRCh38.p13.genome.fa.gz
+- file size 942,238,002 bytes
+
+GRCh38.p13.genome.fa.gz.fai
+- samtools faidx GRCh38.p13.genome.fa.gz
+- file size 22,027 bytes
+
+GRCh38.p13.genome.dict
+- gatk CreateSequenceDictionary GRCh38.p13.genome.fa.gz
+- file size 83,395 bytes
 
 GCF_000001405.39_GRCh38.p13_genomic.fna.gz (version to use in next iteration)**
 - https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Homo_sapiens/annotation_releases/current/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_genomic.fna.gz
@@ -42,7 +62,7 @@ Tools Used:
 
 bwa-mem2 (https://github.com/bwa-mem2)
 - bwa-mem2-2.0pre2 (version used)
-- bwa-mem2-2.2.1 (current version)***
+- bwa-mem2-2.2.1 (version to use in next iteration)***
 
 bcftools
 - apt-get install bcftools

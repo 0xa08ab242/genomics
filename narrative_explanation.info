@@ -1,0 +1,23 @@
+#narrative
+
+When I started this process, I was hoping to just copy and paste steps from someone else's journey, adjusting a few file names and maybe using slightly newer versions of the same software.  The closest recipe I found for what I was trying to accomplish was in a blog entry: "https://strahbg.com/?p=3356"
+
+Like the author of that blog, I was essentially trying to replicate the processes used by the few commercially available analysis pipelines for direct to consumer whole genome sequencing.  Another similarity was that I too had had some analyses done by the same companies, which meant I could my work against the same standards that the blog author had.
+
+As I started acquiring and configuring the tools, I also inventoried the tools I had used the last time I was considering trying a DIY pipeline, and as a result, I installed a few additional tools, so I could also compare my new efforts against a few older attempts.  For example, I also used WGSExtract to grab stats and headers from some older bam files derived from my fastq files.
+
+Then, I started looking through the scripted steps in the blog.  First, I made the decision to omit the portions aimed at hg19 processing, and since my target usage was for the lastest ClinVar data, the hg19 steps would be a waste.  Next, I checked the tools and reference files for more recent versions.  For example, this is when I learned that the dbSNP build provided by the Broad Institute was no longer being updated after build 146.  So, I took some time to learn where the dbSNP vcf file comes from and how to make the latest build (then build 155) work with the rest of the pipeline steps.  While taking the time to figure this out, I started executing the pipeline steps using the older build, knowing that I would want to run it again soon thereafter with some potential improvements.
+
+Another useful idea from the blog entry was to execute the commands in such a way that the elapsed time was tracked and reported.  Given that some of these commands run for days, I find it helpful to have some sense of how long to expect them to run.  Perhaps the most confounding thing precluding strict reliance on the timings provided in the blog are the differences in the hardware used.  Knowing that I would be running the pipeline multiple times, even considering some variability in the steps, it made sense to replicate the timing method to baseline the durations of these steps running on my hardware.
+
+For me, the most useful byproducts of the first run of the pipeline were the issues I was able to correct for the second run and a rough baseline of the expected durations of all of the steps.  The big changes in the second run included: update dbSNP version to build 155, rename the dnSNP CHROM values to match those of the reference fasta, sort the new dnSNP build vcf, use igvtools to index the dnSNP vcf.gz file and create the .idx file that the GATK tools expect, change the aligner from minimap2 to bwa-mem2 to resolve an apparent drop in reads, and increase threads and/or memory resources allocated to several steps in an attempt to reduce the duration of those steps.
+
+Similar to the first, the second run of the pipeline continued along certain known suboptimal paths while I concurrently learned how to improve the steps, validate that the changes from the first version resolved ealier issues, and identify if these changes introduced new issues.  For example, changing the aligner resolved the apparent drop in reads, increasing resources had a minor effect on processing time, the "sorted.hybrid" version of dnSNP build 155 resolved the "no matching" error of prior attempts at that step, and I was able to confirm that build 155 did indeed have many more annotations than build 146 in the intermediate vcf.
+
+The second run was more valuable in that it produced some pipeline optimization opportunities and it yielded the first results that meet my original criteria: use latest reference fasta (hg38p13), use latest dnSNP build (155), and output a properly formatted gvcf for analysis either by me or by a third party (mostly for better formatting of the data).
+
+The next iteration is planned, but it has not yet been initiated.  The biggest planned changes for the next iteration are
+- use the NIH reference fasta (which should have the same CHROM conventions as dnSNP, since it is also from NIH)
+- remove the need for the dbSNP manipulations (rename CHROM, then re-sort) before indexing and performing the haplotype and genotype steps
+- upgrade bwa-mem2 to the latest version
+
