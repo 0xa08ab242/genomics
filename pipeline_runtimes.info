@@ -56,6 +56,9 @@ Step 0e: index sorted dnSBP vcf (generate idx)
 Step 1: fastq alignment using bwa-mem2
 - <filepath>/bwa-mem2 mem -t 10 <filepath>/GRCh38.p13.genome.fa.gz <filepath>/<filename>1.fq.gz <filepath>/<filename>2.fq.gz -R @RG\\tID:foo\\tSM:bar | samtools sort -@10 -o <filepath>/<filename>.bam
 - Elapsed (wall clock) time (h:mm:ss or m:ss): 11:13:30
+- filesize <filename>1.fq.gz    57,943,940,126 bytes
+- filesize <filename>2.fq.gz    64,373,417,241 bytes
+- filesize <filename>.bam      114,855,026,696 bytes
 
 Step 2: check alignment results with WGSExtract
 - use WGSExtract view stats and header of new bam file
@@ -72,10 +75,12 @@ Step 2: check alignment results with WGSExtract
 Step 3: use haplotype caller to build intermediate gvcf
 - <filepath>/gatk --java-options "-Xmx16g" HaplotypeCaller --native-pair-hmm-threads 10 -R <filepath>/GRCh38.p13.genome.fa.gz -I <filepath>/<filename>.bam -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -O <filepath>/<filename>.g.vcf.gz -ERC GVCF --output-mode EMIT_ALL_ACTIVE_SITES
 - Elapsed (wall clock) time (h:mm:ss or m:ss): 108:10:22
+- filesize <filename>.g.vcf.gz           4,544,548,082 bytes
 
 Step 4: use genotype to build final gvcf
 - <filepath>/gatk --java-options "-Xmx16g" GenotypeGVCFs -R <filepath>/GRCh38.p13.genome.fa.gz -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -V <filepath>/<filename>.g.vcf.gz -O <filepath>/<filename>.genotype.vcf.gz -all-sites
-- Elapsed (wall clock) time (h:mm:ss or m:ss):
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 58:29:22
+- filesize <filename>.genotype.vcf.gz   18,266,365,390 bytes
 
 Notes on this run:
 - GRCh38.p13.genome.fa.gz uses a different convention than the NIH dbSNP build, replace with NIH reference file in next iteration
