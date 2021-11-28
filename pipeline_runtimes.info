@@ -83,7 +83,46 @@ Step 4: use genotype to build final gvcf
 - filesize <filename>.genotype.vcf.gz   18,266,365,390 bytes
 
 Notes on this run:
-- GRCh38.p13.genome.fa.gz uses a different convention than the NIH dbSNP build, replace with NIH reference file in next iteration
+- GRCh38.p13.genome.fa.gz uses a different convention than the NIH dbSNP build, considering replacing with the NIH reference file in next pipeline iteration (after the instance in progress completes)
 - two steps ("bcftools annotate --rename" and "bcftools sort") should not be necessary in next iteration
-- quality check in progress (add more notes HERE)
+- "final" gvcf file is too large (17 GB) for some 3rd party analyses
+- the next step in the pipeline should be ClinVar annotation, will look at adding this in the next iteration (presumably starting with the limited ClinVar data from NIH in vcf format)
 
+Third timed runthru (in progress)
+- differences from most rior run
+-- different fastq sample pairs
+-- updated version of bwa-mem
+--- bwa-mem2-2.2.1 offers more CPU optimization than bwa-mem2-2.0pre2 and may be faster
+-- use samtools to index the aligned bam (instead of WGSExtract or gatk)
+- reference files and their derivatives are the same as the prior runthru except for these exceptions
+-- re-index reference fasta using newer bwa-mem2
+
+Step 0: #index the reference genome (GRCh38.p13.genome.fa.gz) with newer version of bwa-mem2
+- <filepath>/bwa-mem2 index <filepath>/GRCh38.p13.genome.fa.gz
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 52:02.38
+
+Step 1: fastq alignment using bwa-mem2
+- <filepath>/bwa-mem2 mem -t 10 <filepath>/GRCh38.p13.genome.fa.gz <filepath>/<filename>1.fq.gz <filepath>/<filename>2.fq.gz -R @RG\\tID:foo\\tSM:bar | samtools sort -@10 -o <filepath>/<filename>.bam
+- Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
+- filesize <filename>1.fq.gz    31,668,145,586 bytes
+- filesize <filename>2.fq.gz    28,277,876,263 bytes
+- filesize <filename>.bam      TBD bytes
+
+Step 2: index the bam newly created
+# pending completion of prior step
+- samtools index -b -@8 <filepath>/<filename>.bam
+
+Step 3: use haplotype caller to build intermediate gvcf
+# pending completion of prior step
+- <filepath>/gatk --java-options "-Xmx16g" HaplotypeCaller --native-pair-hmm-threads 10 -R <filepath>/GRCh38.p13.genome.fa.gz -I <filepath>/<filename>.bam -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -O <filepath>/<filename>.g.vcf.gz -ERC GVCF --output-mode EMIT_ALL_ACTIVE_SITES
+- Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
+- filesize <filename>.g.vcf.gz           TBD bytes
+
+Step 4: use genotype to build final gvcf
+# pending completion of prior step
+- <filepath>/gatk --java-options "-Xmx16g" GenotypeGVCFs -R <filepath>/GRCh38.p13.genome.fa.gz -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -V <filepath>/<filename>.g.vcf.gz -O <filepath>/<filename>.genotype.vcf.gz -all-sites
+- Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
+- filesize <filename>.genotype.vcf.gz   TBD bytes
+
+Notes on this run:
+- WIP, may add notes later
