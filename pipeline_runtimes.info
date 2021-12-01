@@ -103,17 +103,18 @@ Step 0: #index the reference genome (GRCh38.p13.genome.fa.gz) with newer version
 
 Step 1: fastq alignment using bwa-mem2
 - <filepath>/bwa-mem2 mem -t 10 <filepath>/GRCh38.p13.genome.fa.gz <filepath>/<filename>1.fq.gz <filepath>/<filename>2.fq.gz -R @RG\\tID:foo\\tSM:bar | samtools sort -@10 -o <filepath>/<filename>.bam
-- Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 8:15:38
 - filesize <filename>1.fq.gz    31,668,145,586 bytes
 - filesize <filename>2.fq.gz    28,277,876,263 bytes
-- filesize <filename>.bam      TBD bytes
+- filesize <filename>.bam       45,009,420,921 bytes
 
 Step 2: index the bam newly created
-# pending completion of prior step
 - samtools index -b -@8 <filepath>/<filename>.bam
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 3:00.42
+- filesize <filename>.bam.bai        9,440,376 bytes
 
 Step 3: use haplotype caller to build intermediate gvcf
-# pending completion of prior step
+# pending completion (current clock time > 5000 minutes)
 - <filepath>/gatk --java-options "-Xmx16g" HaplotypeCaller --native-pair-hmm-threads 10 -R <filepath>/GRCh38.p13.genome.fa.gz -I <filepath>/<filename>.bam -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -O <filepath>/<filename>.g.vcf.gz -ERC GVCF --output-mode EMIT_ALL_ACTIVE_SITES
 - Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
 - filesize <filename>.g.vcf.gz           TBD bytes

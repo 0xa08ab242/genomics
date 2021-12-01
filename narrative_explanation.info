@@ -16,8 +16,26 @@ Similar to the first, the second run of the pipeline continued along certain kno
 
 The second run was more valuable in that it produced some pipeline optimization opportunities and it yielded the first results that meet my original criteria: use latest reference fasta (hg38p13), use latest dnSNP build (155), and output a properly formatted gvcf for analysis either by me or by a third party (mostly for better formatting of the data).
 
-The next iteration is planned, but it has not yet been initiated.  The biggest planned changes for the next iteration are
+A followup step for the output files is annotation from literature, probably starting with the latest NIH ClinVar vcf source.
+
+The next iteration is being planned using outputs from multiple runs of the current iteration, but it has not yet been initiated.  The biggest changes for the next iteration probably fall into incremental or evolutionary changes:
+
+incremental iterative progress, less risk
 - use the NIH reference fasta (which should have the same CHROM conventions as dnSNP, since it is also from NIH)
-- remove the need for the dbSNP manipulations (rename CHROM, then re-sort) before indexing and performing the haplotype and genotype steps
-- upgrade bwa-mem2 to the latest version
+- remove the need for the dbSNP vcf manipulations (rename CHROM, then re-sort) before indexing and performing the haplotype and genotype steps
+- remove the need for ClinVar vcf manipulations (rename CHROM, then re-sort) before indexing and annotation of the gvcf files
+
+evolutionary change, maybe progress, more unknowns to solve
+- consider switching to using the Ensembl data sources
+-- this could make the use of SnpEff or VEP easier (and more accurate)
+-- but it would mean re-running the pipeline from scratch
+- consider alignments that work with variant discovery groups
+-- such as slivar (https://github.com/brentp/slivar)
+-- or a variation graph output from the Catcus Pangenome Pipeline (https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/doc/pangenome.md)
+- consider adapating the pipeline to utilize DisGeNET sources
+-- convert the vcf data into database tables
+-- setup relations to handle CHROM and dnSNP convention conversions
+-- build some queries to emit intersections between tester data and DisGeNET sources
+-- make the output consumable by humans
+
 
