@@ -114,13 +114,12 @@ Step 2: index the bam newly created
 - filesize <filename>.bam.bai        9,440,376 bytes
 
 Step 3: use haplotype caller to build intermediate gvcf
-# pending completion (current clock time > 5000 minutes)
 - <filepath>/gatk --java-options "-Xmx16g" HaplotypeCaller --native-pair-hmm-threads 10 -R <filepath>/GRCh38.p13.genome.fa.gz -I <filepath>/<filename>.bam -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -O <filepath>/<filename>.g.vcf.gz -ERC GVCF --output-mode EMIT_ALL_ACTIVE_SITES
-- Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
-- filesize <filename>.g.vcf.gz           TBD bytes
+- Elapsed (wall clock) time (h:mm:ss or m:ss): 126:36:16 
+- filesize <filename>.g.vcf.gz    9,638,645,997 bytes
 
 Step 4: use genotype to build final gvcf
-# pending completion of prior step
+# pending completion
 - <filepath>/gatk --java-options "-Xmx16g" GenotypeGVCFs -R <filepath>/GRCh38.p13.genome.fa.gz -D <filepath>/GRCh38.dbSNP155.sorted.hybrid.vcf.gz -V <filepath>/<filename>.g.vcf.gz -O <filepath>/<filename>.genotype.vcf.gz -all-sites
 - Elapsed (wall clock) time (h:mm:ss or m:ss): TBD
 - filesize <filename>.genotype.vcf.gz   TBD bytes
